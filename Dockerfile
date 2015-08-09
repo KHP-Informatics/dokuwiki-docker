@@ -13,6 +13,7 @@ RUN cd /tmp/php-5.6.12/ && ./configure --with-apxs2=/usr/local/apache2/bin/apxs 
 COPY php.ini /usr/local/lib/php.ini
 COPY httpd.conf /usr/local/apache2/conf/httpd.conf
 COPY httpd-ssl.conf /usr/local/apache2/conf/extra/httpd-ssl.conf
+COPY httpd-vhosts.conf /usr/local/apache2/conf/extra/httpd-vhosts.conf
 COPY server.pem /usr/local/apache2/conf/server.pem
 COPY server.key /usr/local/apache2/conf/server.key
 
