@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# Incremental backup of /var/www/dokuwiki to /backup
+# This script should be placed in /etc/cron.daily
+# Daily backups will be taken and stored as backup.0 - backup.6
+#  
+
+# If make backup a volume, then you can have a backup container mount it
+# with --volumes-from and back the whole thing up externally somewhere.
+
+WIKI_PATH="/var/www/dokuwiki"
+BACKUP_PATH="/backup" 
+
+
+rm -rf "${BACKUP_PATH}/backup.6"
+
+for i in 5 4 3 2 1
+do
+  j=$((i+1))
+  mv -f "${BACKUP_PATH}/backup.${i}" "${BACKUP_PATH}/backup.${j}"
+done
+
+
+cp -al "${BACKUP_PATH}/backup.0" "${BACKUP_PATH}/backup.1"
+rsync -a --delete "${WIKI_PATH}"  "${BACKUP_PATH}/backup.0/"

@@ -17,4 +17,6 @@ To generate a self-signed cert for your server:
 
 openssl req -new -x509 -nodes -out server.pem -keyout server.key -days 3650 -subj '/CN=whatever.example.com'
 
-More notes on ssl setup at http://www.microhowto.info/howto/create_a_self_signed_ssl_certificate.html 
+More notes on ssl setup at http://www.microhowto.info/howto/create_a_self_signed_ssl_certificate.html
+
+ 
