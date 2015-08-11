@@ -26,7 +26,7 @@ RUN cd /var/www && tar -xvzf dokuwiki.tgz && rm dokuwiki.tgz
 RUN chown -R dokuwiki:dokuwiki /var/www/dokuwiki
 
 # Daily, Weekly, Monthly incremental backup 
-mkdir /backup
+RUN mkdir /backup
 COPY dokuwiki.daily /etc/cron.daily/dokuwiki
 RUN chmod +x /etc/cron.daily/dokuwiki
 COPY dokuwiki.weekly /etc/cron.weekly/dokuwiki
