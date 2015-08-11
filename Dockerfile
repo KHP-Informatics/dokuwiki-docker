@@ -1,7 +1,7 @@
 FROM httpd
 MAINTAINER Cass Johnston <cassjohnston@gmail.com>
 
-RUN apt-get update && apt-get install -q -y php5 php5-gd vim curl libapache2-mod-php5 bzip2 gcc libapr1-dev libaprutil1-dev libxml2-dev build-essential 
+RUN apt-get update && apt-get install -q -y php5 php5-gd vim curl libapache2-mod-php5 bzip2 gcc libapr1-dev libaprutil1-dev libxml2-dev build-essential rsync 
 
 # Create a user & group (apache runs as this user)
 RUN groupadd --system dokuwiki 
@@ -26,6 +26,7 @@ RUN cd /var/www && tar -xvzf dokuwiki.tgz && rm dokuwiki.tgz
 RUN chown -R dokuwiki:dokuwiki /var/www/dokuwiki
 
 # Daily, Weekly, Monthly incremental backup 
+mkdir /backup
 COPY dokuwiki.daily /etc/cron.daily/dokuwiki
 RUN chmod +x /etc/cron.daily/dokuwiki
 COPY dokuwiki.weekly /etc/cron.weekly/dokuwiki

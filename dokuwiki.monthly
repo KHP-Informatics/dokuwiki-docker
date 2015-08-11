@@ -12,7 +12,7 @@ WIKI_PATH="/var/www/dokuwiki"
 BACKUP_PATH="/backup" 
 
 
-rm -rf "${BACKUP_PATH}/backup.w5"
+rm -rf "${BACKUP_PATH}/backup.m5"
 
 for i in 5 4 3 2 1 0
 do
