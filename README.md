@@ -1,8 +1,8 @@
 # dokuwiki-docker
 
-This doesn't really work as a pre-built container as you need to make site-specific changes to httpd.conf.
+TO BUILD:
 
-To build, you will need to download:
+You will need to download:
 
 Dockuwiki: 
   http://download.dokuwiki.org/out/dokuwiki-d9556fbc2c1c07a0baaf81c07d4165f6.tgz
@@ -10,13 +10,35 @@ Dockuwiki:
 PHP:
   http://php.net/get/php-5.6.12.tar.bz2/from/a/mirror
  
-
 Default httpd.conf assumes ssl (change httpd.conf if you like)
 
-To generate a self-signed cert for your server:
+
+TO RUN
+
+
+docker run -p 80:80 -p 443:443 -d -e PORT=80  -e ADMINEMAIL=foo@bar.com  -v /backup  -v /host/path/server.pem:/usr/local/apache2/conf/server.pem -v /host/path/server.key:/usr/local/apache2/conf/server.key  cassj/dokuwiki
+
+
+You need to provide some config settings as environment variables. These will be used in httpd.conf.
+They're fairly self-explanatory and all optional. Defaults are:
+
+PORT 80
+ADMINEMAIL root@localhost
+SERVERNAME localhost
+
+You will need an SSL cert for your server, which should be provided to the container by bind mounting as a volume.
+You can generate a self signed cert something like:
 
 openssl req -new -x509 -nodes -out server.pem -keyout server.key -days 3650 -subj '/CN=whatever.example.com'
 
 More notes on ssl setup at http://www.microhowto.info/howto/create_a_self_signed_ssl_certificate.html
+
+
+The container is setup to make 7 daily, 4 weekly and 6 monthly incremental backups to /backup.
+Run the container with this location as a volume then your backup container can access it with
+--volumes-from to copy this backup to a remote location
+
+
+
 
  
