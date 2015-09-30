@@ -1,4 +1,0 @@
-#!/bin/sh
-
-# Incremental backup of the entire contents of the /var/www/dokuwiki
-# directory to /backup (which should be a volume f

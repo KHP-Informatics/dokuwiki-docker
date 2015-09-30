@@ -16,7 +16,7 @@ Default httpd.conf assumes ssl (change httpd.conf if you like)
 TO RUN
 
 
-docker run -p 80:80 -p 443:443 -d -e PORT=80  -e ADMINEMAIL=foo@bar.com  -v /backup  -v /host/path/server.pem:/usr/local/apache2/conf/server.pem -v /host/path/server.key:/usr/local/apache2/conf/server.key  cassj/dokuwiki
+docker run -p 80:80 -p 443:443 -d -e PORT=80  -e ADMINEMAIL=foo@bar.com  -v /host/path/server.pem:/usr/local/apache2/conf/server.pem -v /host/path/server.key:/usr/local/apache2/conf/server.key  cassj/dokuwiki
 
 
 You need to provide some config settings as environment variables. These will be used in httpd.conf.
@@ -32,13 +32,6 @@ You can generate a self signed cert something like:
 openssl req -new -x509 -nodes -out server.pem -keyout server.key -days 3650 -subj '/CN=whatever.example.com'
 
 More notes on ssl setup at http://www.microhowto.info/howto/create_a_self_signed_ssl_certificate.html
-
-
-The container is setup to make 7 daily, 4 weekly and 6 monthly incremental backups to /backup.
-Run the container with this location as a volume then your backup container can access it with
---volumes-from to copy this backup to a remote location
-
-
 
 
  
