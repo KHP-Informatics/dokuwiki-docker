@@ -14,20 +14,26 @@ RUN cd /tmp/php-5.6.12/ && ./configure --with-apxs2=/usr/local/apache2/bin/apxs 
 
 # PHP & Apache configuration
 COPY php.ini /usr/local/lib/php.ini
+COPY dokuwiki.htaccess /var/www/dokuwiki/.htaccess
 COPY httpd.conf /usr/local/apache2/conf/httpd.conf
 COPY httpd-ssl.conf /usr/local/apache2/conf/extra/httpd-ssl.conf
 COPY httpd-vhosts.conf /usr/local/apache2/conf/extra/httpd-vhosts.conf
-COPY server.pem /usr/local/apache2/conf/server.pem
-COPY server.key /usr/local/apache2/conf/server.key
 
-# Install dokuwiki
+## Install dokuwiki to a volume
 COPY dokuwiki.tgz /var/www/dokuwiki.tgz
 RUN cd /var/www && tar -xvzf dokuwiki.tgz && rm dokuwiki.tgz 
 RUN chown -R dokuwiki:dokuwiki /var/www/dokuwiki
+VOLUME ['/var/www/dokuwiki']
 
-EXPOSE 80
-EXPOSE 443
+# Better to let the users define what ports they want open?
+#EXPOSE 80
+#EXPOSE 443
 
+# Define default env vars for httpd - you can override these
+ENV PORT 80
+ENV SSLPORT 443
+ENV SERVERNAME localhost
+ENV ADMINEMAIL root@localhost
 
 
 

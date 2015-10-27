@@ -1,0 +1,10 @@
+# This is basically doing what cron.daily etc. do, but specifying a user
+
+# 1am, every day
+0 1 * * * $BKUPUSER  /usr/local/bin/dokuwiki-backup.daily
+
+# 3 am, every Monday
+0 3 * * 1 $BKUPUSER $CMD /usr/local/bin/dokuwiki-backup.weekly
+
+# 5am, 1st of every month
+0 5 1 * * $BKUPUSER $CMD /usr/local/bin/dockuwiki-backup.monthly
