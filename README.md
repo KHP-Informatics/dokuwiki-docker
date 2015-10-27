@@ -1,6 +1,6 @@
 # dokuwiki-docker
 
-TO BUILD:
+# TO BUILD:
 
 You will need to download:
 
@@ -15,11 +15,11 @@ Default httpd.conf assumes ssl (change httpd.conf if you like)
 Then just docker build -t me/whatever .
 
 
-TO RUN:
+# TO RUN:
 
-# You probably want to keep your data in a volume so you can back stuff up.
-# create a data-only container. You should also load your ssl keys in at this point
-# Note to self - if you're using boot2docker, you'll need to copy the keys onto the boot2docker VM
+You probably want to keep your data in a volume so you can back stuff up.
+create a data-only container. You should also load your ssl keys in at this point
+Note to self - if you're using boot2docker, you'll need to copy the keys onto the boot2docker VM
 
   docker run --name=dokuwikidata \
   -v /tmp/server.pem:/usr/local/apache2/conf/server.pem \
@@ -63,4 +63,3 @@ openssl req -new -x509 -nodes -out server.pem -keyout server.key -days 3650 -sub
 More notes on ssl setup at http://www.microhowto.info/howto/create_a_self_signed_ssl_certificate.html
 
 
- 
