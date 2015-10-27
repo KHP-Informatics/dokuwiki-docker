@@ -21,14 +21,14 @@ You probably want to keep your data in a volume so you can back stuff up.
 create a data-only container. You should also load your ssl keys in at this point
 Note to self - if you're using boot2docker, you'll need to copy the keys onto the boot2docker VM
 
-  docker run --name=dokuwikidata \
-  -v /tmp/server.pem:/usr/local/apache2/conf/server.pem \
-  -v /tmp/server.key:/usr/local/apache2/conf/server.key \
-  cassj/dokuwiki /bin/true
+    docker run --name=dokuwikidata \
+    -v /tmp/server.pem:/usr/local/apache2/conf/server.pem \
+    -v /tmp/server.key:/usr/local/apache2/conf/server.key \
+    cassj/dokuwiki /bin/true
 
 if you 
 
-  docker inspect dokuwikidata
+    docker inspect dokuwikidata
 
 you'll see that the /var/www/dokuwiki directory is mapped to a host directory:
 
