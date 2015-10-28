@@ -14,7 +14,7 @@ RUN cd /tmp/php-5.6.12/ && ./configure --with-apxs2=/usr/local/apache2/bin/apxs 
 
 # PHP & Apache configuration
 COPY php.ini /usr/local/lib/php.ini
-COPY dokuwiki.htaccess /var/www/dokuwiki/.htaccess
+#COPY dokuwiki.htaccess /var/www/dokuwiki/.htaccess
 COPY httpd.conf /usr/local/apache2/conf/httpd.conf
 COPY httpd-ssl.conf /usr/local/apache2/conf/extra/httpd-ssl.conf
 COPY httpd-vhosts.conf /usr/local/apache2/conf/extra/httpd-vhosts.conf
@@ -23,7 +23,9 @@ COPY httpd-vhosts.conf /usr/local/apache2/conf/extra/httpd-vhosts.conf
 COPY dokuwiki.tgz /var/www/dokuwiki.tgz
 RUN cd /var/www && tar -xvzf dokuwiki.tgz && rm dokuwiki.tgz 
 RUN chown -R dokuwiki:dokuwiki /var/www/dokuwiki
-VOLUME ['/var/www/dokuwiki']
+
+# This doesn't seem to work (but -v /var/www/dokuwiki on container creation does) - is this a boot2docker issue?
+VOLUME '/var/www/dokuwiki'
 
 # Better to let the users define what ports they want open?
 #EXPOSE 80
