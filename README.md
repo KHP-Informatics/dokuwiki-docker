@@ -1,13 +1,13 @@
 # dokuwiki-docker
 
-# TO BUILD:
+### TO BUILD:
 
 Default httpd.conf assumes ssl (change httpd.conf if you like)
 
 Then just docker build -t me/whatever .
 
 
-# TO RUN:
+### TO RUN:
 
 You probably want to keep your data in a volume so you can back stuff up.
 create a data-only container. You should also load your ssl keys in at this point
@@ -59,7 +59,7 @@ openssl req -new -x509 -nodes -out server.pem -keyout server.key -days 3650 -sub
 More notes on ssl setup at http://www.microhowto.info/howto/create_a_self_signed_ssl_certificate.html
 
 
-# BACKUP
+### BACKUP
 
 If you want to backup your data, you could run something like the following, which would copy the entire contents of the /var/www/dokuwiki 
 directory to the /tmp/bkup directory on the host. 
