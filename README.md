@@ -2,14 +2,6 @@
 
 # TO BUILD:
 
-You will need to download:
-
-Dockuwiki: 
-  http://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz
-
-PHP:
-  http://php.net/get/php-5.6.12.tar.bz2/from/a/mirror
- 
 Default httpd.conf assumes ssl (change httpd.conf if you like)
 
 Then just docker build -t me/whatever .
