@@ -23,17 +23,13 @@ COPY httpd-vhosts.conf /usr/local/apache2/conf/extra/httpd-vhosts.conf
 COPY dokuwiki.tgz /var/www/dokuwiki.tgz
 RUN cd /var/www && tar -xvzf dokuwiki.tgz && rm dokuwiki.tgz 
 RUN chown -R dokuwiki:dokuwiki /var/www/dokuwiki
-
-# This doesn't seem to work (but -v /var/www/dokuwiki on container creation does) - is this a boot2docker issue?
 VOLUME '/var/www/dokuwiki'
 
-# Better to let the users define what ports they want open?
-#EXPOSE 80
-#EXPOSE 443
+# http and httpd ports. You can map these to whatever host ports you want with -p
+EXPOSE 80
+EXPOSE 443
 
-# Define default env vars for httpd - you can override these
-ENV PORT 80
-ENV SSLPORT 443
+# Default env vars for httpd. You can override these at runtime if you want to
 ENV SERVERNAME localhost
 ENV ADMINEMAIL root@localhost
 
