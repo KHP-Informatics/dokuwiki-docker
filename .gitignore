@@ -1,3 +1,4 @@
 notgit
 server.key
 server.pem
+*.swp

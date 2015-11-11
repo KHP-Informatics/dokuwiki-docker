@@ -10,7 +10,7 @@ Then just docker build -t me/whatever .
 ### TO RUN:
 
 You probably want to keep your data in a volume so you can back stuff up.
-create a data-only container. You should also load your ssl keys in at this point
+create a data-only container. You can also load your ssl keys in at this point
 Note to self - if you're using boot2docker, you'll need to copy the keys onto the boot2docker VM
 
 ```
