@@ -1,7 +1,7 @@
 FROM httpd
 MAINTAINER Cass Johnston <cassjohnston@gmail.com>
 
-RUN apt-get update && apt-get install -q -y php5 php5-gd vim curl libapache2-mod-php5 bzip2 gcc libapr1-dev libaprutil1-dev libxml2-dev build-essential rsync wget  && apt-get clean 
+RUN apt-get update && apt-get install -q -y php5 php5-gd vim curl openssl libapache2-mod-php5 bzip2 gcc libapr1-dev libaprutil1-dev libxml2-dev build-essential rsync wget php-net-ldap  && apt-get clean 
 
 # Create a user & group (apache runs as this user)
 RUN groupadd --system dokuwiki 
