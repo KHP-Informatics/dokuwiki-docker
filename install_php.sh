@@ -2,18 +2,28 @@
 
 #  fetch php
 cd /tmp
-wget  "http://nz2.php.net/get/php-5.6.15.tar.bz2/from/this/mirror"
-mv mirror php-5.6.15.tar.bz2
-tar -xvjf php-5.6.15.tar.bz2
-cd php-5.6.15
-# can't find SLL libs
-ln -s /usr/lib/x86_64-linux-gnu/libssl.so /usr/lib/libssl.so
-ln -s /usr/lib/x86_64-linux-gnu/libcrypto.so /usr/lib/libcrypto.so
+
+curl -L  "http://nz2.php.net/get/php-7.0.5.tar.bz2/from/this/mirror" > php-7.0.5.tar.bz2
+tar -xvjf php-7.0.5.tar.bz2
+cd php-7.0.5
+
+# can't find ldap libs for some reason
+ln -s /usr/lib/x86_64-linux-gnu/libldap.so /usr/lib/ 
+ln -s /usr/lib/x86_64-linux-gnu/libldap_r.so /usr/lib/
+ln -s /usr/lib/x86_64-linux-gnu/liblber.so /usr/lib/
+ln -s /usr/lib/x86_64-linux-gnu/liblber-2.4.so.2 /usr/lib/
+ln -s /usr/lib/x86_64-linux-gnu/liblber-2.4.so.2.10.3 /usr/lib/
+
 # Configure, Compile and Install
-./configure --with-apxs2=/usr/local/apache2/bin/apxs --without-pear  --enable-mbstring --with-openssl
+./configure --with-apxs2=/usr/local/apache2/bin/apxs --without-pear  --enable-mbstring --with-openssl --with-ldap --with-gd
 make 
 make install
+
+# Add to apache
+cp -p .libs/*.so /usr/local/apache/modules/
+
 # Clean up
 rm -rf /tmp/php*
+
 
 

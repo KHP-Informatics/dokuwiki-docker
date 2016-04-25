@@ -1,36 +1,30 @@
 FROM httpd
 MAINTAINER Cass Johnston <cassjohnston@gmail.com>
 
-RUN apt-get update && apt-get install -q -y php5 php5-gd vim curl openssl libapache2-mod-php5 bzip2 gcc libapr1-dev libaprutil1-dev libxml2-dev build-essential rsync wget php-net-ldap  && apt-get clean 
+RUN apt-get update && apt-get install -q -y  vim curl openssl libssl-dev pkg-config libpng12-0 libpng12-dev libldap-2.4-2 libldap2-dev bzip2 gcc libapr1-dev libaprutil1-dev libxml2-dev build-essential rsync wget && apt-get clean 
 
 # Create a user & group (apache runs as this user)
 RUN groupadd --system dokuwiki 
 RUN useradd --system -g dokuwiki dokuwiki 
 
 # Install PHP for this Apache
-# Install PHP for this Apache
 COPY install_php.sh /tmp/install_php.sh
 RUN chmod +x /tmp/install_php.sh
 RUN /tmp/install_php.sh
 
-#COPY php-5.6.12.tar.bz2 /tmp/php-5.6.12.tar.bz2
-#RUN cd /tmp && tar -xvjf php-5.6.12.tar.bz2
-#RUN cd /tmp/php-5.6.12/ && ./configure --with-apxs2=/usr/local/apache2/bin/apxs  && make && make install
-
-# PHP & Apache configuration
+## PHP & Apache configuration
 COPY php.ini /usr/local/lib/php.ini
 COPY httpd.conf /usr/local/apache2/conf/httpd.conf
 COPY httpd-ssl.conf /usr/local/apache2/conf/extra/httpd-ssl.conf
 COPY httpd-vhosts.conf /usr/local/apache2/conf/extra/httpd-vhosts.conf
 
+
 ## Install dokuwiki to a volume
+RUN mkdir -p /var/www/html
 COPY install_dokuwiki.sh /tmp/install_dokuwiki.sh
 RUN chmod +x /tmp/install_dokuwiki.sh
 RUN /tmp/install_dokuwiki.sh
 
-#COPY dokuwiki.tgz /var/www/dokuwiki.tgz
-#RUN cd /var/www && tar -xvzf dokuwiki.tgz && rm dokuwiki.tgz 
-#RUN chown -R dokuwiki:dokuwiki /var/www/dokuwiki
 
 VOLUME '/var/www/dokuwiki'
 
