@@ -17,7 +17,8 @@ COPY php.ini /usr/local/lib/php.ini
 COPY httpd.conf /usr/local/apache2/conf/httpd.conf
 COPY httpd-ssl.conf /usr/local/apache2/conf/extra/httpd-ssl.conf
 COPY httpd-vhosts.conf /usr/local/apache2/conf/extra/httpd-vhosts.conf
-
+RUN mkdir /usr/local/apache2/conf/dokuwiki-ssl
+#VOLUME '/usr/local/apache2/conf/dokuwiki-ssl'
 
 ## Install dokuwiki to a volume
 RUN mkdir -p /var/www/html
@@ -25,8 +26,7 @@ COPY install_dokuwiki.sh /tmp/install_dokuwiki.sh
 RUN chmod +x /tmp/install_dokuwiki.sh
 RUN /tmp/install_dokuwiki.sh
 
-
-VOLUME '/var/www/dokuwiki'
+#VOLUME '/var/www/dokuwiki'
 
 # http and httpd ports. You can map these to whatever host ports you want with -p
 EXPOSE 80
