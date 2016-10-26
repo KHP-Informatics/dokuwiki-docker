@@ -28,7 +28,7 @@ docker rm deleteme
 Now you can start an instance of the actual web-server that will use the data volumes. 
 
 ```
-  docker run --name=dokuwiki -d -p 80:80 -p 443:443 -e PORT=80 -e SSLPORT=443 -e ADMINEMAIL=whoever@example.com -e SERVERNAME=localhost -v dokuwiki-data:/var/www/dokuwiki -v dokuwiki-keys:/usr/local/apache2/conf/dokuwiki-ssl --log-opt max-size=2m --log-opt max-file=3  cassj/dokuwiki:0.1
+  docker run --name=dokuwiki -d -p 80:80 -p 443:443 -e PORT=80 -e SSLPORT=443 -e ADMINEMAIL=whoever@example.com -e SERVERNAME=localhost -v dokuwiki-data:/var/www/dokuwiki -v dokuwiki-keys:/usr/local/apache2/conf/ssl-certs --log-opt max-size=2m --log-opt max-file=3  cassj/dokuwiki:0.1
 ```
 
 You need to provide some config settings as environment variables. These will be used in httpd.conf.
@@ -46,6 +46,8 @@ Once your container is running, go to <host>/install.php to complete the install
 
 ### To Upgrade
 
+Notes on upgrading dokuwiki can be found here - https://www.dokuwiki.org/install:upgrade. They basically amount to overwriting the existing php files with the new ones and letting dokuwiki's upgrade process do the rest. To do this with this container, do somethign like: 
+
 Backup your volumes. 
 
 Pull the latest version of the container image from dockerhub
@@ -55,13 +57,14 @@ Stop your running container
 Mount the named volume to a temporary location and copy over the updates: 
 
 ```
-docker run -it -v dokuwiki-data:/data cassj/dokuwiki:0.1 /usr/bin/rsync -avz /var/www/dokuwiki/ /data/
+docker run --name=deleteme -it -v dokuwiki-data:/data cassj/dokuwiki /usr/bin/rsync -avz /var/www/dokuwiki/ /data/
+docker rm deleteme
 ``` 
 
 And then start a new instance of the container with the updated volume:
 
 ```
-docker run --name=dokuwiki -d -p 80:80 -p 443:443 -e PORT=80 -e SSLPORT=443 -e ADMINEMAIL=whoever@example.com -e SERVERNAME=localhost -v dokuwiki-data:/var/www/dokuwiki -v dokuwiki-keys:/usr/local/apache2/conf/dokuwiki-ssl cassj/dokuwiki:0.1
+docker run --name=dokuwiki -d -p 80:80 -p 443:443 -e PORT=80 -e SSLPORT=443 -e ADMINEMAIL=whoever@example.com -e SERVERNAME=localhost -v dokuwiki-data:/var/www/dokuwiki -v dokuwiki-keys:/usr/local/apache2/conf/dokuwiki-ssl --log-opt max-size=2m --log-opt max-file=3 cassj/dokuwiki:0.1
 ```
 
 
