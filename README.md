@@ -1,5 +1,8 @@
 # dokuwiki-docker
 
+Current Version of Dokuwiki is 2016-06-26a Elenor of Tsort
+
+
 ### TO BUILD:
 
 Default httpd.conf assumes ssl (change httpd.conf if you like)
@@ -21,14 +24,14 @@ Put your SSL cert in a named volume. For dev, you can just:
 Docker 1.9 recommends using named volumes, but until 1.10 (https://github.com/docker/docker/issues/18670) these don't copy over the data from the container image as anonymous volumes did. To work around this for now, create a named data volume by manually copying over the contents:
 
 ```
-docker run --name=deleteme -it -v dokuwiki-data:/data cassj/dokuwiki:0.1 /usr/bin/rsync -avz /var/www/dokuwiki/ /data/ 
+docker run --name=deleteme -it -v dokuwiki-data:/data cassj/dokuwiki-docker:elenor_of_tsort /usr/bin/rsync -avz /var/www/dokuwiki/ /data/ 
 docker rm deleteme
 ```
 
 Now you can start an instance of the actual web-server that will use the data volumes. 
 
 ```
-  docker run --name=dokuwiki -d -p 80:80 -p 443:443 -e PORT=80 -e SSLPORT=443 -e ADMINEMAIL=whoever@example.com -e SERVERNAME=localhost -v dokuwiki-data:/var/www/dokuwiki -v dokuwiki-keys:/usr/local/apache2/conf/ssl-certs --log-opt max-size=2m --log-opt max-file=3  cassj/dokuwiki:0.1
+  docker run --name=dokuwiki -d -p 80:80 -p 443:443 -e PORT=80 -e SSLPORT=443 -e ADMINEMAIL=whoever@example.com -e SERVERNAME=localhost -v dokuwiki-data:/var/www/dokuwiki -v dokuwiki-keys:/usr/local/apache2/conf/ssl-certs --log-opt max-size=2m --log-opt max-file=3  cassj/dokuwiki-docker:elenor_of_tsort
 ```
 
 You need to provide some config settings as environment variables. These will be used in httpd.conf.
@@ -57,14 +60,14 @@ Stop your running container
 Mount the named volume to a temporary location and copy over the updates: 
 
 ```
-docker run --name=deleteme -it -v dokuwiki-data:/data cassj/dokuwiki /usr/bin/rsync -avz /var/www/dokuwiki/ /data/
+docker run --name=deleteme -it -v dokuwiki-data:/data cassj/dokuwiki-docker:elenor_of_tsort /usr/bin/rsync -avz /var/www/dokuwiki/ /data/
 docker rm deleteme
 ``` 
 
 And then start a new instance of the container with the updated volume:
 
 ```
-docker run --name=dokuwiki -d -p 80:80 -p 443:443 -e PORT=80 -e SSLPORT=443 -e ADMINEMAIL=whoever@example.com -e SERVERNAME=localhost -v dokuwiki-data:/var/www/dokuwiki -v dokuwiki-keys:/usr/local/apache2/conf/dokuwiki-ssl --log-opt max-size=2m --log-opt max-file=3 cassj/dokuwiki:0.1
+docker run --name=dokuwiki -d -p 80:80 -p 443:443 -e PORT=80 -e SSLPORT=443 -e ADMINEMAIL=whoever@example.com -e SERVERNAME=localhost -v dokuwiki-data:/var/www/dokuwiki -v dokuwiki-keys:/usr/local/apache2/conf/ssl-certs cassj/dokuwiki-docker:elenor-of-tsort
 ```
 
 
