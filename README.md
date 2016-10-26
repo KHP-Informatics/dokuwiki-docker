@@ -31,7 +31,7 @@ docker rm deleteme
 Now you can start an instance of the actual web-server that will use the data volumes. 
 
 ```
-  docker run --name=dokuwiki -d -p 80:80 -p 443:443 -e PORT=80 -e SSLPORT=443 -e ADMINEMAIL=whoever@example.com -e SERVERNAME=localhost -v dokuwiki-data:/var/www/dokuwiki -v dokuwiki-keys:/usr/local/apache2/conf/dokuwiki-ssl --log-opt max-size=2m --log-opt max-file=3  cassj/dokuwiki-docker:elenor_of_tsort
+  docker run --name=dokuwiki -d -p 80:80 -p 443:443 -e PORT=80 -e SSLPORT=443 -e ADMINEMAIL=whoever@example.com -e SERVERNAME=localhost -v dokuwiki-data:/var/www/dokuwiki -v dokuwiki-keys:/usr/local/apache2/conf/ssl-certs --log-opt max-size=2m --log-opt max-file=3  cassj/dokuwiki-docker:elenor_of_tsort
 ```
 
 You need to provide some config settings as environment variables. These will be used in httpd.conf.
@@ -64,7 +64,7 @@ docker run -it -v dokuwiki-data:/data cassj/dokuwiki-docker:elenor_of_tsort /usr
 And then start a new instance of the container with the updated volume:
 
 ```
-docker run --name=dokuwiki -d -p 80:80 -p 443:443 -e PORT=80 -e SSLPORT=443 -e ADMINEMAIL=whoever@example.com -e SERVERNAME=localhost -v dokuwiki-data:/var/www/dokuwiki -v dokuwiki-keys:/usr/local/apache2/conf/dokuwiki-ssl cassj/dokuwiki-docker:elenor-of-tsort
+docker run --name=dokuwiki -d -p 80:80 -p 443:443 -e PORT=80 -e SSLPORT=443 -e ADMINEMAIL=whoever@example.com -e SERVERNAME=localhost -v dokuwiki-data:/var/www/dokuwiki -v dokuwiki-keys:/usr/local/apache2/conf/ssl-certs cassj/dokuwiki-docker:elenor-of-tsort
 ```
 
 
