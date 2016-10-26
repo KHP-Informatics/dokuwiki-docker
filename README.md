@@ -1,5 +1,8 @@
 # dokuwiki-docker
 
+Current Version of Dokuwiki is 2016-06-26a Elenor of Tsort
+
+
 ### TO BUILD:
 
 Default httpd.conf assumes ssl (change httpd.conf if you like)
